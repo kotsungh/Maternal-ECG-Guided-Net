@@ -1,3 +1,3 @@
 # Maternal-Guided-ECG-Net
 
-<img src="/images/meg-net.svg" width="50%">
+<img src="/images/meg-net.svg" width="60%">
