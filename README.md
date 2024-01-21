@@ -1,1 +1,1 @@
-# meg-net
+# Maternal-Guided-ECG-Net
