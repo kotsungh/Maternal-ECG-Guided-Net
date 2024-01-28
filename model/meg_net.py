@@ -32,8 +32,6 @@ class DownConv(nn.Module):
         else:
             return self.conv(x)
 
-
-  
 class SubtractionConvBlock(nn.Module):
     
     def __init__(self, in_channels: int, out_channels: int, kernel_size: int, pool: Optional[bool] = True):
@@ -65,8 +63,6 @@ class SubtractionConvBlock(nn.Module):
         else:
             return x
 
-
-
 class UpConv(nn.Module):
 
     def __init__(self, in_channels: int, out_channels: int, kernel_size: int):
@@ -91,8 +87,6 @@ class UpConv(nn.Module):
         x = torch.cat((x1, x2), dim=1)
         return self.conv(x)     
     
-
-
 class MaternalGuidedECGNet(nn.Module):
     
     def __init__(
