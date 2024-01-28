@@ -142,8 +142,8 @@ class MaternalGuidedECGNet(nn.Module):
         
         for i in range(self.n_depths):
             if i == 0:
-                encoder_abecg[f"abecg_{i}"]= self.down_abecg[0](abecg)
-                encoder_mecg[f"mecg_{i}"] = self.down_mecg[0](mecg) 
+                encoder_abecg[f"abecg_{i}"]= self.down_abecg[i](abecg)
+                encoder_mecg[f"mecg_{i}"] = self.down_mecg[i](mecg) 
             elif i == (self.n_depths - 1):
                 bottom = self.down_abecg[i](encoder_abecg[f"abecg_{i - 1}"][1], encoder_mecg[f"mecg_{i - 1}"][1])
             else:
@@ -155,7 +155,7 @@ class MaternalGuidedECGNet(nn.Module):
         n_temp = len(encoder_abecg)
         for i in range(self.n_depths - 1):
             if i == 0:
-                fecg = self.up[0](bottom, encoder_abecg[f"abecg_{n_temp - 1 - i}"][0])
+                fecg = self.up[i](bottom, encoder_abecg[f"abecg_{n_temp - 1 - i}"][0])
             else:
                 fecg = self.up[i](fecg, encoder_abecg[f"abecg_{n_temp - 1 - i}"][0])
         
