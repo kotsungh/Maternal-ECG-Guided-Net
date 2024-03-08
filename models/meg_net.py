@@ -97,7 +97,7 @@ class MaternalECGGuidedNet(nn.Module):
             m_kernel_size: Optional[int] = 5,
             base_channels: Optional[int] = 16
         ):
-        super(MaternalGuidedECGNet, self).__init__()
+        super(MaternalECGGuidedNet, self).__init__()
         
         self.n_depths = n_depths
         self.signal_dim = signal_dim
