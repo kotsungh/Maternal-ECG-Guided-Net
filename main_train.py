@@ -14,8 +14,7 @@ from torch.distributed import init_process_group, destroy_process_group
 from engine_train import Trainer
 from dataset import ADFECGDB_Dataset_Vector
 
-
-                
+             
 def prepare_dataloader(dataset: Dataset, batch_size: int, is_train: Optional[bool] = True):
     num_tasks = torch.distributed.get_world_size()
     global_rank = torch.distributed.get_rank()
@@ -42,7 +41,6 @@ def prepare_dataloader(dataset: Dataset, batch_size: int, is_train: Optional[boo
             shuffle=False,
             sampler=sampler
         )
-
 
 
 def main(args):
@@ -94,7 +92,6 @@ def main(args):
     trainer.train(args.num_epochs)
     
     destroy_process_group()
-
 
 
 if __name__ == "__main__": 
