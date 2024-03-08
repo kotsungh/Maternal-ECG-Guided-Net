@@ -87,7 +87,7 @@ class UpConv(nn.Module):
         x = torch.cat((x1, x2), dim=1)
         return self.conv(x)     
     
-class MaternalGuidedECGNet(nn.Module):
+class MaternalECGGuidedNet(nn.Module):
     
     def __init__(
             self, 
