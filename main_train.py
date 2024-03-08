@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from models.meg_net_v2 import MaternalGuidedECGNet
+from models.meg_net_v2 import MaternalECGGuidedNet
 import torch.nn as nn
 import numpy as np
 import argparse
@@ -66,7 +66,7 @@ def main(args):
     )
     
     ##### Initialize model
-    model = MaternalGuidedECGNet(
+    model = MaternalECGGuidedNet(
         n_depths=args.depth, 
         signal_dim=args.signal_dim, 
         abecg_kernel_size=args.abecg_kernel_size, 
