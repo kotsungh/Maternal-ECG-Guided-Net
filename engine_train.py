@@ -9,7 +9,6 @@ import numpy as np
 from typing import Iterable, Optional
 
 
-
 class Trainer:
     def __init__(
         self,
@@ -203,6 +202,4 @@ class Trainer:
             total_time = time.time() - start_time
             print('[Training complete in {:.0f}m {:.0f}s]'.format(total_time // 60, total_time % 60))
             print()
-            
-            
-            
+                      
