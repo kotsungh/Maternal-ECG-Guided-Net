@@ -1,5 +1,5 @@
 # Maternal-ECG-Guided-Net
- Acquiring a reliable and accurate non-invasive fetal
+Acquiring a reliable and accurate non-invasive fetal
 electrocardiogram has a number of significant challenges
 historically in both data acquisition and attenuation of the
 interfering maternal cardiogram. These factors encompass
