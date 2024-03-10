@@ -21,4 +21,4 @@ leveraging the precise information from the maternal QRS
 attenuating maternal electrocardiogram from the abdominal
 electrocardiogram.
 
-<img src="/images/meg-net.svg" width="60%">
+<p align="center"><img src="/images/meg-net.svg" width="60%">
