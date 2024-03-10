@@ -1,4 +1,4 @@
-# Maternal-ECG-Guided-Net
+# Maternal-ECG-Guided-Net (MEG-Net)
 Acquiring a reliable and accurate non-invasive fetal
 electrocardiogram has a number of significant challenges
 historically in both data acquisition and attenuation of the
