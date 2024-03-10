@@ -20,4 +20,5 @@ leveraging the precise information from the maternal QRS
 (MQRS) complex serves as a suitable prior for effectively
 attenuating maternal electrocardiogram from the abdominal
 electrocardiogram.
+
 <img src="/images/meg-net.svg" width="60%">
