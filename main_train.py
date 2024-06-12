@@ -12,7 +12,7 @@ from torch.utils.data.distributed import DistributedSampler
 from torch.distributed import init_process_group, destroy_process_group
 
 from engine_train import Trainer
-from dataset import ADFECGDB_Dataset_Vector
+from dataset import ADFECGDB_Dataset
 
                 
 def prepare_dataloader(dataset: Dataset, batch_size: int, is_train: Optional[bool] = True):
@@ -50,17 +50,17 @@ def main(args):
     cudnn.benchmark = True
     
     ##### Initialize dataloader
-    train_root = r"D:\Documents\AuscultechDx Database\FECG-Manuscript1\ADFECGDB-Vector-fs250\train"
-    eval_root = r"D:\Documents\AuscultechDx Database\FECG-Manuscript1\ADFECGDB-Vector-fs250\val"
+    train_root = r".\train"
+    eval_root = r".\val"
     
     train_dataloader = prepare_dataloader(
-        ADFECGDB_Dataset_Vector(train_root) , 
+        ADFECGDB_Dataset(train_root) , 
         args.batch_size, 
         is_train=True
     )
     
     eval_dataloader = prepare_dataloader(
-        ADFECGDB_Dataset_Vector(eval_root), 
+        ADFECGDB_Dataset(eval_root), 
         args.batch_size, 
         is_train=False
     )
