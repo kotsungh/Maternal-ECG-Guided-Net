@@ -1,9 +1,9 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from models.meg_net_v2 import MaternalECGGuidedNet
+from models.meg_net_v2 import MaternalEcgGuidedNet
 import torch.nn as nn
-import numpy as np
+
 import argparse
 from typing import Optional
 
@@ -14,14 +14,14 @@ from torch.distributed import init_process_group, destroy_process_group
 from engine_train import Trainer
 from dataset import ADFECGDB_Dataset_Vector
 
-             
+                
 def prepare_dataloader(dataset: Dataset, batch_size: int, is_train: Optional[bool] = True):
-    num_tasks = torch.distributed.get_world_size()
+    world_size = torch.distributed.get_world_size()
     global_rank = torch.distributed.get_rank()
     
     if is_train:
         sampler = DistributedSampler(
-            dataset, num_replicas=num_tasks, rank=global_rank, shuffle=True
+            dataset, num_replicas=world_size, rank=global_rank, shuffle=True
         )
         return DataLoader(
             dataset,
@@ -32,7 +32,7 @@ def prepare_dataloader(dataset: Dataset, batch_size: int, is_train: Optional[boo
         )
     else:
         sampler = DistributedSampler(
-            dataset, num_replicas=num_tasks, rank=global_rank, shuffle=False
+            dataset, num_replicas=world_size, rank=global_rank, shuffle=False
         )
         return DataLoader(
             dataset,
@@ -66,7 +66,7 @@ def main(args):
     )
     
     ##### Initialize model
-    model = MaternalECGGuidedNet(
+    model = MaternalEcgGuidedNet(
         n_depths=args.depth, 
         signal_dim=args.signal_dim, 
         abecg_kernel_size=args.abecg_kernel_size, 
