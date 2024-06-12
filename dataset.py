@@ -3,7 +3,7 @@ import glob
 import torch
 from util import util
     
-class ADFECGDB_Dataset_Vector(torch.utils.data.Dataset):
+class ADFECGDB_Dataset(torch.utils.data.Dataset):
     
     def __init__(self, parent_dir, is_train=True):
         self.filepath = glob.glob(os.path.join(parent_dir, "*.mat"))
