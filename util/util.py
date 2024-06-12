@@ -2,13 +2,8 @@ import torch
 import numpy as np
 import scipy.io
 import h5py
-# from data_loader import data_loader
 from util import util
-#################################################
-#
-# Utilities
-#
-#################################################
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # reading data
@@ -64,12 +59,3 @@ class MatReader(object):
 
     def set_float(self, to_float):
         self.to_float = to_float
-
-# def create_encoder(list_ids, data_path):
-#     encoding_set = data_loader.EncoderDataset(list_ids, data_path)
-#     encoding_generator = torch.utils.data.DataLoader(encoding_set, batch_size=len(list_ids))
-#     for x, y in encoding_generator:
-#             break
-#     x_normalizer = util.UnitGaussianNormalizer(x)
-#     y_normalizer = util.UnitGaussianNormalizer(y)
-#     return(x_normalizer, y_normalizer)
