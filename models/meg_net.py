@@ -87,22 +87,22 @@ class UpConv(nn.Module):
         x = torch.cat((x1, x2), dim=1)
         return self.conv(x)     
     
-class MaternalECGGuidedNet(nn.Module):
+class MaternalEcgGuidedNet(nn.Module):
     
     def __init__(
             self, 
             n_depths: int, 
             signal_dim: int, 
-            ab_kernel_size: Optional[int] = 7, 
-            m_kernel_size: Optional[int] = 5,
+            abecg_kernel_size: Optional[int] = 7, 
+            mecg_kernel_size: Optional[int] = 5,
             base_channels: Optional[int] = 16
         ):
-        super(MaternalECGGuidedNet, self).__init__()
+        super(MaternalEcgGuidedNet, self).__init__()
         
         self.n_depths = n_depths
         self.signal_dim = signal_dim
-        self.ab_kernel_size = ab_kernel_size
-        self.m_kernel_size = m_kernel_size
+        self.abecg_kernel_size = abecg_kernel_size
+        self.mecg_kernel_size = mecg_kernel_size
         self.base_channels = base_channels        # Number of feature maps in first depth
         
         
@@ -112,18 +112,18 @@ class MaternalECGGuidedNet(nn.Module):
         
         
         self.down_abecg = nn.ModuleList([
-            DownConv(1, self.base_channels, self.ab_kernel_size) if i == 0 else
-            SubtractionConvBlock(self.base_channels * (2 ** i), self.base_channels * (2 ** i), self.ab_kernel_size, pool=False) if i == self.n_depths - 1 else
-            SubtractionConvBlock(self.base_channels * (2 ** i), self.base_channels * (2 ** i), self.ab_kernel_size) for i in range(self.n_depths)]
+            DownConv(1, self.base_channels, self.abecg_kernel_size) if i == 0 else
+            SubtractionConvBlock(self.base_channels * (2 ** i), self.base_channels * (2 ** i), self.abecg_kernel_size, pool=False) if i == self.n_depths - 1 else
+            SubtractionConvBlock(self.base_channels * (2 ** i), self.base_channels * (2 ** i), self.abecg_kernel_size) for i in range(self.n_depths)]
         )
         
         self.down_mecg = nn.ModuleList([
-            DownConv(1, self.base_channels, self.m_kernel_size) if i == 0 else
-            DownConv(self.base_channels * (2 ** (i - 1)), self.base_channels * (2 ** i), self.m_kernel_size) for i in range(self.n_depths - 1)]
+            DownConv(1, self.base_channels, self.mecg_kernel_size) if i == 0 else
+            DownConv(self.base_channels * (2 ** (i - 1)), self.base_channels * (2 ** i), self.mecg_kernel_size) for i in range(self.n_depths - 1)]
         )
         
         self.up = nn.ModuleList([
-            UpConv(self.base_channels * (2 ** i), self.base_channels * (2 ** (i - 1)), self.ab_kernel_size) for i in range(self.n_depths - 1, 0, -1)]
+            UpConv(self.base_channels * (2 ** i), self.base_channels * (2 ** (i - 1)), self.abecg_kernel_size) for i in range(self.n_depths - 1, 0, -1)]
         )
         
         self.out = nn.Conv1d(in_channels=self.base_channels, out_channels=1, kernel_size=1)
