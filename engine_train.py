@@ -40,7 +40,6 @@ class Trainer:
         self.scheduler_gamma = scheduler_gamma
         
         self.start_epoch = 0 # initialize epoch to 0
-        
         self.best_eval_loss = np.inf
         
         self.model = model
@@ -88,7 +87,7 @@ class Trainer:
         
         self.optimizer.load_state_dict(checkpoint["OPTIMIZER_STATE_DICT"])
         self.scheduler.load_state_dict(checkpoint["SCHEDULER_STATE_DICT"])
-        self.loss_fn= checkpoint["LOSS"]
+        self.loss_fn = checkpoint["LOSS"]
         self.start_epoch = checkpoint["START_EPOCH"]
         self.best_eval_loss = checkpoint["BEST_EVAL_LOSS"]
         
@@ -99,7 +98,7 @@ class Trainer:
             "MODEL_STATE_DICT": self.ddp_model.module.state_dict(),
             "OPTIMIZER_STATE_DICT": self.optimizer.state_dict(),
             "SCHEDULER_STATE_DICT": self.scheduler.state_dict(),
-            'LOSS': self.loss_fn,
+            "LOSS": self.loss_fn,
             "START_EPOCH": epoch,
             "BEST_EVAL_LOSS": self.best_eval_loss
         }      
@@ -115,10 +114,11 @@ class Trainer:
     def train(self, max_epochs: int):
         
         start_time = time.time()
-        stop_training_count = 0
+        stop_training_count = torch.Tensor([0])
         
         for epoch in range(self.start_epoch, max_epochs):
             if stop_training_count >= 25:
+                self.writer.close()
                 break
             
             since = time.time()
@@ -126,7 +126,7 @@ class Trainer:
             self.ddp_model.train()
             self.train_dataloader.sampler.set_epoch(epoch) 
             
-            #--------------Training
+            #--------------Training Phase
             train_running_loss = 0.0
             
             for abecg, mecg, fecg in self.train_dataloader:
@@ -150,7 +150,7 @@ class Trainer:
             
             barrier()
             
-            #--------------Evaluation
+            #--------------Evaluation Phase
             eval_running_loss = 0.0
             self.ddp_model.eval()
             
@@ -188,9 +188,11 @@ class Trainer:
                 if eval_loss <= self.best_eval_loss:
                     self.best_eval_loss = eval_loss
                     self._save_checkpoint(epoch)
-                    stop_training_count = 0
+                    stop_training_count = torch.Tensor([0])
+                    torch.distributed.broadcast(stop_training_count, src=0)
                 else:
                     stop_training_count += 1
+                    torch.distributed.broadcast(stop_training_count, src=0)
                     
                 print(f'[Best evaluation loss: {self.best_eval_loss:.4f}]')
                 
@@ -202,4 +204,4 @@ class Trainer:
             total_time = time.time() - start_time
             print('[Training complete in {:.0f}m {:.0f}s]'.format(total_time // 60, total_time % 60))
             print()
-                      
+            
