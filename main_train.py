@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from models.meg_net_v2 import MaternalEcgGuidedNet
+from models.meg_net import MaternalEcgGuidedNet
 import torch.nn as nn
 
 import argparse
