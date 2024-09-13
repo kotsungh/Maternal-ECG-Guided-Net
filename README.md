@@ -3,4 +3,4 @@ Acquiring a reliable and accurate non-invasive fetal electrocardiogram has a num
 
 <p align="center"><img src="/images/meg-net.svg" width="40%">
 
-K.-T. Hsu, T. Nguyen, A. Krishnan, R. Govindan, and R. Shekhar, “Maternal Ecg-Guided Neural Network for Improved Fetal Electrocardiogram Extraction.” Rochester, NY, Mar. 12, 2024. doi: 10.2139/ssrn.4747966.
+K.-T. Hsu, T. Nguyen, A. Krishnan, R. Govindan, and R. Shekhar, “Maternal ECG-guided neural network for improved fetal electrocardiogram extraction.” Biomedical Signal Processing and Control, Sep. 12, 2024. https://doi.org/10.1016/j.bspc.2024.106793.
