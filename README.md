@@ -1,1 +1,1 @@
-K.-T. Hsu, T. Nguyen, A. Krishnan, R. Govindan, and R. Shekhar, “Maternal ECG-guided neural network for improved fetal electrocardiogram extraction.” Biomedical Signal Processing and Control, Sep. 12, 2024. https://doi.org/10.1016/j.bspc.2024.106793.
+K.-T. Hsu, T. N. Nguyen, A. N. Krishnan, R. Govindan, and R. Shekhar, “Maternal ECG-guided neural network for improved fetal electrocardiogram extraction,” Biomed. Signal Process. Control, vol. 99, p. 106793, Jan. 2025, doi: 10.1016/j.bspc.2024.106793.
